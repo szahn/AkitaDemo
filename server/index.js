@@ -13,7 +13,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 const googleMapsApi = "https://maps.googleapis.com/maps/api";
-const apiKey = "AIzaSyDPrHk9jZZIdHZoAAZujP4DsyDlmpaQrD8";
+const apiKey = "";
 
 const places = [];
 
