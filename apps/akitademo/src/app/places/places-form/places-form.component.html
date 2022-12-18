@@ -1,0 +1,82 @@
+<div>
+    <h2>{{activePlace === null ? "Add" : "Edit"}} Place</h2>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
+        <strong>Error</strong> {{error}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="clearError($event)"></button>
+      </div>
+
+    <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <div class="row g-3">
+            <div class="col-6">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="placeName" formControlName="name" >
+                    <label for="placeName">Name</label>
+                </div>        
+            </div>
+            <div class="col-4">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="placeCategory" formControlName="category" >
+                        <option [ngValue]="category.value" *ngFor="let category of CategoryDataSource">{{category.text}}</option>
+                    </select>
+                    <label for="placeCategory">Category</label>
+                </div>
+            </div>
+            <div class="col-2 d-grid">
+                <button type="button" class="btn btn-outline-secondary" (click)="suggestNearbyListing($event)" [disabled]="isBusy">Nearby</button>
+            </div>
+        </div>
+        <div class="row g-3" *ngIf="showNearbyListings">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        Places found nearby <button type="button" class="btn-close close-card-btn" aria-label="Close" (click)="closeNearbyListing($event)"></button>
+                    </div>
+                    <ol class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let place of suggestedPlaces"><a href="#{{place.placeId}}" (click)="addSuggestedListing($event, place)">{{place.name}} {{place.address}}</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="placeAddress1" formControlName="address1" >
+                <label for="placeAddress1">Address 1</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="placeAddress2" formControlName="address2" >
+                <label for="placeAddress2">Address 2</label>
+            </div>
+            </div> 
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="placeCity" formControlName="city" >
+                        <label for="placeCity">City</label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" aria-label="Default select example" id="placeState" formControlName="state" >
+                            <option [ngValue]="state.value" *ngFor="let state of StateDataSource">{{state.text}}</option>
+                          </select>
+                        <label for="placeState">State</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="placeZip" formControlName="zip" >
+                        <label for="placeZip">Zip</label>
+                    </div>
+                </div>
+            </div> 
+        <div class="row g-3 mb-2">
+            <div class="col-6 d-grid gap-2">
+                <button type="submit" class="btn btn-primary me-2" [disabled]="isBusy">{{activePlace === null ? "Add" : "Edit"}}</button>
+            </div>  
+            <div class="col-6 d-grid gap-2">
+                <button class="btn btn-secondary" [disabled]="isBusy" (click)="clearForm($event)">Clear</button>
+            </div>  
+        </div>
+    </form>
+</div>

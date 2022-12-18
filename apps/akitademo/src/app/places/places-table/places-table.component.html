@@ -1,0 +1,29 @@
+<div>
+    <table class="table mb-2">
+        <thead>
+            <tr>
+                <th><a href="#" title="refresh" (click)="refresh($event)"><i class="bi bi-arrow-clockwise"></i></a></th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="places.length === 0">
+                <td colspan="5"><i>No places found.</i></td>
+            </tr>
+            <tr *ngFor="let place of places" [ngClass]="{'table-active': activePlace && activePlace.id === place.id}">
+                <td>
+                    <a href="#" [attr.data-place-id]="place.id" (click)="deletePlace($event)" title="Delete"><i class="bi bi-trash"></i></a>
+                </td>
+                <td><a href="#" [attr.data-place-id]="place.id" (click)="editPlace($event)" title="Edit">{{place.name}}</a></td>
+                <td>{{place.address1}} {{place.address2}}</td>
+                <td>{{place.city}}</td>
+                <td>{{place.state}}</td>
+                <td>{{place.zip}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
